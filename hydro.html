@@ -1,0 +1,110 @@
+Globalizácia, urbanizácia, klimatické zmeny, extrémne počasie - to sú zložité problémy, ktoré nemožno vyriešiť jednou osobou. Cieľom mnohých odborníkov je hľadať nástroje pre spoločné plánovanie a projektovanie, vyvíjať pomocné metódy ako nájsť konštrukčné riešenie, ktoré zlepšuje život a životné prostredie.
+
+V súčasnosti riešené medzinárodné aj národné projekty, európske programy, bilaterálne spolupráce sú dôkazom snahy vytvoriť databázu údajov o prirodzenom území. Využitie geografických informačných systémov (GIS) umožňuje tieto údaje priestorovo analyzovať a hľadať ich vzájomné vzťahy. Ich vizualizácia je predpokladom lepšej prehľadnosti a využiteľnosti potrebných informácií, napríklad aj v hydrológii. Podrobné vyhodnotenie má význam či už pri územnom plánovaní, oceňovaní pozemkov alebo slúži poisťovniam pri poisťovaní konkrétnych oblastí.
+
+Ako študentka na <a href="http://www.svf.stuba.sk/">stavebnej fakulte</a> som chtiac či nechtiac mala tendenciu technické znalosti prepájať čo najviac s praxou. Venovala som sa napríklad predikcii oblastí náchylných na zosúvanie alebo prácou s katastrálnymi dátami v GIS (o tom možno niekedy nabudúce). V tomto príspevku by som rada ukázala, ako možno open source GIS využívať pri hydrologických analýzach. Od verzie <a href="http://qgis.org/en/site/forusers/visualchangelog212/">QGIS 2.12</a> sa totiž mnohí používatelia tešia z funkčnosti <a href="https://docs.qgis.org/2.6/en/docs/user_manual/grass_integration/grass_integration.html">zásuvného modulu GRASS</a>. Ten ponúka celú radu nástrojov pre hydrologické modelovanie či výpočet erózie.
+
+Odtokové pomery a stav riešeného územia z hľadiska zrážkoodtokových vzťahov a straty pôdy eróziou môžno hodnotiť pomocou metód <a href="https://cs.wikipedia.org/wiki/Metoda_CN_k%C5%99ivek">SCS CN</a> a <a href="https://cs.wikipedia.org/wiki/Univerz%C3%A1ln%C3%AD_rovnice_ztr%C3%A1ty_p%C5%AFdy">USLE</a>. Znázornenie vypočítaných hodnôt, ktoré predstavujú priemernú dlhodobú stratu v prostredí GIS môže vyzerať aj ako na obrázku nižšie.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/g_3D-300x166.png" alt="g_3D" width="500" /><em>Priemerná dlhodobá strata pôdy pre riešené územie.</em></p>
+Všetky údaje použité v tomto príspevku boli poskytuté <a href="http://www.fsv.cvut.cz/katedry/katedra2.php?Katedra=143">Katedrou hydromeliorácií a krajinného inžinierstva</a> Fakulty stavebnej ČVUT v Prahe - voľne dostupné alebo získané v rámci spolupráce s Krajským úradom Stredočeského kraja. Prezentované výsledky treba zatiaľ vnímať ako ilustráciu možného riešenia.
+<h3><span style="color: #808080;">1. Metóda SCS CN</span></h3>
+<h5>Teoretické východiská</h5>
+Ide o výpočet priameho odtoku z povodia, ktorý je tvorený tzv. povrchovým odtokom a tzv. hypodermickým (podpovrchovým) odtokom. Metóda bola vypracovaná službou na ochranu pôd Soil Conservation Service (SCS) v USA. Objem zrážok je na objem odtoku prevedený podľa čísel odtokových kriviek <span style="color: #808080;">CN</span>, ktoré sú tabelizované na základe hydrologických vlastností pôd a predstavujú pomer priameho a celkového odtoku.
+
+Číslo <span style="color: #808080;">CN</span> závisí od kombinácie hydrologickej skupiny pôdy a spôsobu využitia územia v danom mieste. Kód hydrologickej skupiny pôdy je získaný z dát hlavných pôdnych jednotiek (presnejší spôsob) alebo dát komplexného prieskumu pôd (tam, kde informácie o hlavných pôdnych jednotkách k dispozícii nie sú).
+<h5>Základné symboly</h5>
+<ul>
+	<li><span style="color: #808080;">CN</span> - číslo odtokovej krivky</li>
+	<li><span style="color: #808080;">A</span> - maximálna potenciálna strata z povodia <span style="color: #808080;">(mm)</span></li>
+	<li><span style="color: #808080;">I</span><sub><span style="color: #808080;">a</span> </sub>- počiatočná strata z povodia, keď ešte nedochádza k odtoku <span style="color: #808080;">(mm)</span></li>
+	<li><span style="color: #808080;">H<sub>s </sub></span>- návrhová výška zrážky, záťažový stav <span style="color: #808080;">(mm)</span></li>
+	<li><span style="color: #808080;">H<sub>o </sub></span>- výška priameho odtoku<span style="color: #808080;"> (mm)</span></li>
+	<li><span style="color: #808080;">O<sub>p </sub></span>- objem priameho odtoku <span style="color: #808080;">(m<sup>3</sup>)</span></li>
+</ul>
+Platí, že pomer medzi skutočnou a maximálnou stratou z povodia je rovnaký ako pomer odtoku a zrážky, ktorá je redukovaná o počiatočné straty.
+<h5>Vstupné dáta</h5>
+<ul>
+	<li><span style="color: #808080;">hpj.shp</span> - vektorová vrstva hlavných pôdnych jednotiek (z kódov BPEJ)</li>
+	<li><span style="color: #808080;">kpp.shp </span>- vektorová vrstva komplexného prieskumu pôd</li>
+	<li><span style="color: #808080;">landuse.shp</span> - vektorová vrstva využitia územia</li>
+	<li><span style="color: #808080;">povodi.shp </span>- vektorová vrstva povodí IV. rádu s návrhovými zrážkami <span style="color: #808080;">H<sub>s</sub></span></li>
+	<li><span style="color: #808080;">hpj_hydrsk</span> - číselník s hydrologickými skupinami pôd pre hlavné pôdne jednotky</li>
+	<li><span style="color: #808080;">kpp_hydrsk</span> - číselník s hydrologickými skupinami pôd pre vrstvu komplexného prieskumu pôd</li>
+	<li><span style="color: #808080;">lu_hydrsk_cn</span> - číselník s číslami <span style="color: #808080;">CN</span> pre kombináciu využitia územia a hydrologickej skupiny</li>
+</ul>
+<h5>Navrhovaný postup</h5>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/schema_scs-cn-300x173.png" alt="schema_scs-cn" width="500" /><em>Grafická schéma postupu.</em></p>
+Znázornenie vstupných dát spolu s atribútovými tabuľkami je na obrázkoch nižšie.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/hpjkpp-300x90.png" alt="" width="700" /><em>Hlavné pôdne jednotky a podrobný prieskup pôd spolu s ich atribútovými tabuľkami.</em></p>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/lupov-300x96.png" alt="" width="700" /><em>Využitie územia a vrstva povodí IV. rádu spolu s ich atribútovými tabuľkami.</em></p>
+
+<h5>Postup spracovania v QGIS</h5>
+Nebudem na tomto mieste podrobne opisovať celý postup, no stručne naznačím, že veľká časť riešenia zahŕňa použitie zásuvného modulu GRASS. Opisuje postup založenia lokácie a mapsetu z prostredia QGIS, nastavenie výpočtového regiónu a rozlíšenia.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/n_mapset-300x200.png" alt="" width="700" /><em>Vytvorenie lokácie a mapsetu, nastavenie výpočtovej oblasti a rozlíšenie.</em></p>
+Na prekrývanie, resp. nájdenie prieniku alebo zjednotenie vektorových vrstiev sú použité moduly <span style="color: #808080;"><em>v.overlay.and </em></span>a <span style="color: #808080;"><em>v.overlay.or</em></span>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/v_overlay_and-300x254.png" alt="" width="350" /><em>Moduly na prekrývanie vektorových vrstiev.</em></p>
+Pripájanie tabuliek k existujúcej tabuľke vektorov robíme pomocou modulu <span style="color: #808080;"><em>v.db.join</em></span>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/v_db_join-300x106.png" alt="" width="700" /><em>Pripojenie tabuľky k existujúcej tabuľke vektorov.</em></p>
+Na štatistické výpočty, editáciu atribútov a matematické operácie s dátami sú použité moduly <span style="color: #808080;"><em>v.to.db</em></span> a <span style="color: #808080;"><em>v.db.update_op</em></span>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/area_A-300x109.png" alt="" width="700" /><em>Výpočet výmery a parametra <span style="color: #808080;"><em>A<span style="color: #000000;">.</span></em></span></em></p>
+Nové stĺpce pridávame modulom <span style="color: #808080;"><em>v.db.addcolumn</em></span>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/add_columns-300x211.png" alt="" width="350" /><em>Vytvorenie viacerých stĺpcov naraz.</em></p>
+Na konverziu vektorových dát na raster na základe atribútu možno aplikovať modul <span style="color: #808080;"><em>v.to.rast.attr</em></span>. Priemerné hodnoty priameho odtoku pre každé povodie v riešenom území sú počítané modulom <span style="color: #808080;"><em>v.rast.stats</em></span>, ktorý slúži na výpočet štatistických informácií rastrovej mapy na základe vektorovej vrstvy.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/v_rast_stats-300x211.png" alt="" width="350" /><em>Dialógové okno modulu <span style="color: #808080;"><em>v.rast.stats<span style="color: #000000;">.</span></em></span></em></p>
+Výsledky a medzivýsledky prezentujeme v QGIS-e.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/navrhove_zrazky-300x132.png" alt="" width="700" /><em>Zobrazenie povodí IV. rádu s návrhovými zrážkami (vľavo), výška priameho odtoku pre elementárne plochy (vpravo).</em></p>
+
+<h3>2. Priemerná dlhodobá strata pôdy</h3>
+<h5>Teoretické východiská</h5>
+Priemerné ročné straty pôdy spôsobené odtokom z pozemku určitého sklonu a určitého spôsobu využívania možno predikovať pomocou matematického modelu USLE, tzv. univerzálnej rovnice straty pôdy (<em>Wischmeier a Smith, 1978</em>):
+<p style="text-align: center;"><strong><em>G = R . K . L . S . C . P</em></strong></p>
+
+<h5>Základné symboly</h5>
+<ul>
+	<li><span style="color: #808080;">G</span> - priemerná dlhodobá strata pôdy (<span style="color: #808080;">t.ha<sup>-1</sup>. rok<sup>-1</sup></span>)</li>
+	<li><span style="color: #808080;">R</span> - faktor eróznej účinnosti dažďa (<span style="color: #808080;">MJ.ha<sup>-1</sup>.cm.h<sup>-1</sup></span>)</li>
+	<li><span style="color: #808080;">K</span> - faktor erodovateľnosti pôdy (<span style="color: #808080;">t.h.MJ<sup>-1</sup>.cm<sup>-1</sup>.rok<sup>-1</sup></span>)</li>
+	<li><span style="color: #808080;">L</span> - faktor dĺžky svahu (<span style="color: #808080;">-</span>)</li>
+	<li><span style="color: #808080;">S</span> - faktor sklonu svahu (<span style="color: #808080;">-</span>)</li>
+	<li><span style="color: #808080;">C</span> - faktor ochranného vplyvu vegetačného krytu (<span style="color: #808080;">-</span>)</li>
+	<li><span style="color: #808080;">P</span> - faktor účinnosti protieróznych opatrení (<span style="color: #808080;">-</span>)</li>
+</ul>
+<h5>Vstupné dáta</h5>
+<ul>
+	<li><span style="color: #808080;">hpj.shp</span> - vektorová vrstva hlavných pôdnych jednotiek (z kódov BPEJ)</li>
+	<li><span style="color: #808080;">kpp.shp</span> - vektorová vrstva komplexného prieskumu pôd</li>
+	<li><span style="color: #808080;">landuse.shp</span> - vektorová vrstva využitia územia</li>
+	<li><span style="color: #808080;">povodi.shp</span> - vektorová vrstva povodí IV. rádu s návrhovými zrážkami <span style="color: #808080;">H<sub>s</sub></span></li>
+	<li><span style="color: #808080;">hpj_k</span> - číselník s kódom <span style="color: #808080;">K</span> pre hlavné pôdne jednotky</li>
+	<li><span style="color: #808080;">kpp_k</span> - číselník s kódom <span style="color: #808080;">K</span> pre pre vrstvu komplexného prieskumu pôd</li>
+	<li><span style="color: #808080;">lu_c</span> - číselník s kódom <span style="color: #808080;">C</span> pre vrstvu využitia územia</li>
+	<li><span style="color: #808080;">dmt</span> - digitálny model terénu v rozlišení 10 x 10 m</li>
+	<li><span style="color: #808080;">maska.pack</span> - oblasť územia bez líniových a plošných prvkov prerušujúcich odtok</li>
+</ul>
+<h5>Navrhovaný postup</h5>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/schema_usle-300x191.png" alt="" width="700" /><em>Grafická schéma postupu.</em></p>
+Znázornenie vstupných vektorových dát spolu s atribútovými tabuľkami je totožné so vstupnými vektorovými dátami pri metóde SCS CN. Digitálny model reliéfu a oblasť riešeného územia bez líniových a plošných prvkov prerušujúcich odtok (maska) sú na obrázku nižšie.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/dmt_maska-300x140.png" alt="" width="700" /><em>Vrstva digitálneho modelu reliéfu a oblasť riešeného územia bez prvkov prerušujúcich odtok.</em></p>
+
+<h5>Postup spracovania v QGIS</h5>
+Ani pri tejto metóde nebudem podrobne opisovať jednotlivé kroky. Okrem modulov spomenutých vyššie, boli v tomto prípade navyše aplikované modul <span style="color: #808080;"><em>r.resamp.stats</em></span>, ktorý prevzorkuje raster napríklad pomocou agregácie, ďalej modul <span style="color: #808080;"><em>r.slope</em></span>, <span style="color: #808080;"><em>r.terraflow </em></span>a iné.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/slope_accumulation-300x140.png" alt="" width="700" /><em>Sklonové pomery a akumulácia odtoku.</em></p>
+Pracujeme aj s modulom <span style="color: #808080;"><em>r.mapcalc</em></span>. V jeho dialógovom okne zostavíme algoritmus. Na obrázku nižšie je výraz na výpočet hodnoty <span style="color: #808080;">LS</span> spolu so zobrazením v mapovom okne.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/calc_ls-300x137.png" alt="" width="700" /><em>Grafický kalkulátor a topografický faktor LS zahrňujúci vplyv dĺžky a sklonu svahu.</em></p>
+Po výpočte výslednej hodnoty rovnice USLE výsledky porovnáme.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/g_por-300x132.png" alt="" width="700" /><em>Porovnanie výsledkov USLE bez ohľadu na prvky prerušujúce odtok (vľavo) a s prvkami prerušujúcimi odtok (vpravo).</em></p>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/g_pov_por-300x270.png" alt="" width="350" /><em>Povodia s priemernými hodnotami straty pôdy bez a s uvážením prvkov prerušujúcich odtok.</em></p>
+Pri oboch metódach je kladený dôraz na rozdelenie riešeného územia na malé elementárne plochy a pokiaľ je možné, udržať dáta vo vektorovej podobe. Okrem presnejších výsledkoch to umožňuje prípadné ďalšie výpočty pre rôzne zvolené plochy, ako napríklad jednotlivé pozemky alebo katastrálne územia. Treba si vždy dať pozor, aby riešenie bolo v súlade s modernými požiadavkami grafického spracovania a aby sa súčasne čo najviac blížilo reálnym skutočnostiam.
+<h3>Automatizácia výpočtov</h3>
+<h5>Processing modeler</h5>
+Ak sú dispozícii kvalitné a podrobné dáta, je dobre známy postup spracovania, v ére informačných technológií nastupuje snaha vytvoriť modelovacie programy, ktoré sú schopné výsledky počítať automaticky. Processing modeler je nástroj na podporu vizuálneho programovania. Jednotlivé časti kódu reprezentujú grafické elementy. V prostredí QGIS je dostupný v záložke <em>Spracovanie &gt; Grafický modeler</em>. Po jeho vytvorení možno model uložiť a neskôr ho opäť použiť alebo upraviť.
+<h5>Grafický modeler GRASS GIS</h5>
+Aj GRASS GIS modeler umožňuje grafickou formou vytvárať, editovať, spravovať komplexné modely a modelovať geopriestorové analýzy. Možno ním reťazce procesov, napríklad moduly zabaliť do jedného procesu – modelu. Potom stačí iba mierne zmeniť vstupné hodnoty alebo parametre modelu a po spustení sa celý proces vykoná sám. V rámci grafického modeleru môžeme definovať dátové položky - rastrové, vektorové, priestorové mapy, definovať akcie – príkazy GRASS GIS, vzťahy medzi dátami a funkciami, definovať cykly, podmienky, premenné modelu a podobne. Ďalej môžeme validovať, spustiť model, exportovať ho do súboru, Python skriptu alebo ako obrázok.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/01/modely-300x74.png" alt="" width="700" /><em>Možnosti automatizácie v GIS.</em></p>
+Automatizácia je už však nad rámec tohto príspevku, no v každom prípade sa k nej ešte určite niekedy vrátime.
+<h5>Záver</h5>
+Geoinformatici nechcú (a nemôžu) byť hydrológmi či geológmi, ale len spolupráca viacerých odborníkov môže byť plodná pri riešení týchto interdisciplinárnych problémov. Je potrebné poznať pozadie a disciplíny, v ktorých je možné geoinformačné systémy nasadiť, aby sa dali plnohodnotne používať, prípadne aspoň pochopiť škálu problémov, kde sa ich riešenie dá aplikovať. Je to dôležité aj preto, aby sa nemuselo potvrdiť nepísané pravidlo, ktoré hovorí: <em>Nemožnosť použitia GIS riešenia nie je spôsobená nepripravenosťou systémov, ale malou predstavivosťou a slabou pripravenosťou používateľa GIS</em>.
+
+Ak vás príspevok zaujal alebo si viete predstaviť riešenie v inej sfére, dajte o tom vedieť, prípadne sledujte stránku <a href="http://www.gismentors.cz/">GISMentors</a>. V najbližších mesiacoch plánujeme ďalšie kurzy <a href="http://www.gismentors.cz/skoleni/qgis/">QGIS</a>, <a href="http://www.gismentors.cz/skoleni/grass-gis/">GRASS GIS</a>, <a href="http://www.gismentors.cz/skoleni/geopython/">GeoPython</a> či <a href="http://www.gismentors.cz/skoleni/postgis/">PostGIS</a>. Stretnúť nás môžete tiež na <a href="http://gis.vsb.cz/gisostrava/cz/">GIS Ostrava</a> a <a href="http://gishackathon.eu/">GISHackathon</a> v Brne. Budeme sa tešiť!
+
+Za GISMentors <em>Ľudka Furtkevičová</em>

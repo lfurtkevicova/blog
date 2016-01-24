@@ -1,0 +1,74 @@
+Je to niečo viac ako mesiac, čo uzrela svetlo sveta nová verzia známeho Open Source geografického informačného systému QGIS. Súčasnú dlhodobú stabilnú verziu LTR (Long Term Release) QGIS 2.8 Wien a krátkodobú vývojovú verziu DEV (Development) QGIS 2.13 tak doplňuje o najnovšiu časť LR (Latest Release) tejto štandardnej trojice. Dostala názov <em>Lyon</em> podľa mesta, v ktorom sa konalo stretnutie vývojárov projektu QGIS v apríli 2012.
+
+Verzia 2.12 obsahuje mnoho skvelých vylepšení s cieľom urobiť z najpopulárnejšieho voľného GIS-u ešte atraktívnejší a užitočnejší nástroj. Podrobný <a class="reference external" href="https://www.qgis.org/en/site/forusers/visualchangelog212/index.html">changelog</a> na <a class="reference external" href="https://www.qgis.org/en/site/index.html">oficiálnej stránke</a> poskytuje prehľad všetkých lákavých zmien spolu s možnosťou inštalácie mnohých verzií pre najrozšírenejšie platformy, akými sú MS Windows, GNU/Linux či Mac OSX.
+
+Novinky sú ďalším krokom k zlepšeniu a potvrdzujú, že QGIS rozhodne dokáže konkurovať aj vyspelým komerčným desktopovým GIS. Pozrime sa na niektoré z nich.
+<div id="spravca-projektov" class="section">
+<h3>1. Správca projektov</h3>
+Po spustení novej verzie užívateľa privíta okno nedávnych projektov v rámci programu QGIS. Okrem miniatúr mapového okna úvodná obrazovka poskytuje aj základné informácie o posledných projektoch akými sú názov (1), cesta k súboru na disku (2) či detaily o súradnicovom systéme (3). Konkrétny projekt je možné otvoriť jednoduchým dvojklikom.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/projects.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/projects.png" alt="projects" width="700" /></a><em>Uvítacie okno s náhľadom na posledné projekty.</em></p>
+
+</div>
+<div id="styl-prostredia" class="section">
+<h3>2. Štýl prostredia</h3>
+Na rozdiel od staších verzií QGIS 2.12 umožňuje nastavenie štýlu pracovného prostredia. Farebnú schému možno zmeniť v nastaveniach. Okrem predvoleného štýlu je zatiaľ k dispozícii tzv. <em>nočný motív</em> užívateľského rozhrania. Predpokladáme, že je len otázkou času, kedy komunita implementuje ďalšie atraktívne témy.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/thm.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/thm.png" alt="thm" width="700" /></a><em>Zmena štýlu pracovného prostredia.</em></p>
+
+</div>
+<div id="moznost-menit-farebnu-stupnicu" class="section">
+<h3>3. Možnosť meniť farebnú stupnicu</h3>
+Existujúcu farebnú stupnicu je možné editovať generovaním novej palety v nastaveniach konkrétnej vrstvy. Táto vlastnosť otvára užívateľovi nové možnosti pri vytváraní rôznych stupníc a dovoľuje tak kombinovať širokú škálu farieb.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/c.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/c.png" alt="c" width="500" /></a><em>Úprava farebnej stupnice.</em></p>
+
+</div>
+<div id="filter-vyhladavania" class="section">
+<h3>4. Filter vyhľadávania</h3>
+Pri písaní výrazu je možné využiť filter jedinečných hodnôt atribútov, čo v mnohých prípadoch, najmä pri veľkých dátach dokáže urýchliť a zefektívniť dopytovanie.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/hledat.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/hledat.png" alt="hledat" width="700" /></a><em>Efektívne vyhľadávanie pri dopytovaní.</em></p>
+
+</div>
+<div id="formatovanie-v-atributovej-tabulke" class="section">
+<h3>5. Formátovanie v atribútovej tabuľke</h3>
+Ďalšou výbornou novinkou je možnosť farebne odlíšiť bunky v atribútovej tabuľke. Ikonka <img style="width: 1.5em; display: inline-block;" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/rendererCategorizedSymbol.png" alt="" /> v jej pravom hornom rohu prináša nové možnosti pri prezeraní atribútov, prípadne pri vyhľadávaní odľahlých alebo chybných údajov. Výhodou je, že formát ostáva uložený a aj po zatvorení projektu bunky nestratia nastavený štýl.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/tab.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/tab.png" alt="tab" width="500" /></a><em>Rôzny štýl buniek v atribútovej tabuľke založený na podmienkach.</em></p>
+
+</div>
+<div id="popisky" class="section">
+<h3>6. Popisky</h3>
+Jednej vrstve môžeme nastaviť viacero štýlov textu. Vďaka <img style="width: 1.5em; display: inline-block;" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/mActionLabeling.png" alt="RBL" /><sup><em>Rule-based labeling</em></sup> sa dajú nastaviť pravidlá a popisky v mapovom okne budú vyzerať odlišne. Pravidlá možno kopírovať, editovať alebo mazať. Mapa sa tak stáva prehľadnejšia a štýl textu môže skrývať ďalšie informácie.
+
+Ďalšou novinkou v rámci textu je voľba, v ktorej zabránime zobrazeniu tých reťazcov, ktoré sa nezmestia do polygónu alebo voľba, ktorou vieme nastaviť prioritu popiskov.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/text.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/text.png" alt="text" width="700" /></a><em>Nastavenie popiskov v rámci jednej mapovej vrstvy.</em></p>
+
+</div>
+<div id="pouzitie-vlastnych-premennych" class="section">
+<h3>7. Použitie vlastných premenných</h3>
+<em>Lyon</em> tiež prináša používanie vlastných premenných. Tie možno použiť na globálnej úrovni, v rámci projektu, vrstvy alebo v rámci mapovej kompozície (užitočné napríklad pre mimorámové údaje). Globálne premenné nájdeme a editujeme vo všeobecných nastaveniach, tie pre projekt a vrstvy vo vlastnostiach konkrétneho projektu a vrstvy. Pri kompozícii môže ísť napríklad o výšku a šírku mapového listu alebo rozlíšenie DPI. Vytvorené premenné potom použijeme rozkliknutím <img style="width: 1.5em; display: inline-block;" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/mIconDataDefineExpressionOn.png" alt="VE" /> ikony alebo ako to znázorňuje obrázok nižšie.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/var.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/var.png" alt="var" width="700" /></a><em>Globálne premenné a premenné v rámci projektu a vrstvy.</em></p>
+
+</div>
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/var1.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/var1.png" alt="var" width="700" /></a><em>Príklad použitia premenných v rámci mimorámových údajov.</em></p>
+
+<div id="externy-python-editor" class="section">
+<h3>8. Externý Python editor</h3>
+V Python konzole pribudla nová ikonka <img style="width: 1.5em; display: inline-block;" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/iconShowEditorConsole.png" alt="PY" />, ktorou spustíme štandardný textový editor. Tak vieme pohodlne upravovať a následne uložiť existujúci súbor s kódom. Na obrázku nižšie je príklad použitia pre časti obcí Prahy.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/pk.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/pk.png" alt="pk" width="700" /></a><em>Súčasná Python konzola.</em></p>
+
+</div>
+<div id="vylepsenie-pre-postgis-vrstvy" class="section">
+<h3>9. Vylepšenie pre PostGIS vrstvy</h3>
+QGIS prehliadač verzie 2.12 umožňuje vytvoriť, premenovať, odstrániť schémy, kopírovať tabuľky z jednej schémy do inej, mazať vrstvy a manipulovať s nimi priamo zo správcu vrstiev.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/db.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/db.png" alt="db" width="500" /></a><em>Správca PostGIS vrstiev.</em></p>
+
+</div>
+<div id="grass-gis-zasuvny-modul" class="section">
+<h3>10. GRASS GIS zásuvný modul</h3>
+Na záver nemožno zabudnúť na tento užitočný zásuvný modul, ktorý bol predstavený už pred desiatimi rokmi. Bohužiaľ nepracovalo sa s ním práve najlepšie, resp. s verziou GRASS GIS 7 nefungoval vôbec. Teraz je aktualizovaný pre súčasnú verziu GRASS-u. Priamo z prostredia QGIS máme prístup k mapsetom, modulom, vieme načítať vektorové a rastrové vrstvy, pričom tie vektorové vieme v programe QGIS aj editovať. Opravená je ak kompatibilita GRASS funkcií v nástrojoch geoprocessingu. Funkčnosť modulu určite ocenia mnohí používatelia.
+<p style="text-align: center;"><a href="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/gg.png"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2015/12/gg.png" alt="gg" width="900" /></a><em>Možnosti podpory GRASS GIS v prostredí QGIS.</em></p>
+
+</div>
+Pochopiteľne s novou funkcionalitou môžu prísť nové chyby (bugy). Preto ak pri práci narazíte na akékoľvek problémy (či už s touto alebo inou verziou), skúste o tom informovať vývojárov vyplnením <em>ticket-u</em> v <a class="reference external" href="http://hub.qgis.org/">QGIS Bug sekcii</a> a tak môžete pomôcť k stále lepšej podobe tohto šikovného a obľúbeného softvéru.
+
+Informácie týkajúce sa školení nielen QGIS ale aj ďalších príbuzných softvérov nájdete <a class="reference external" href="http://www.gismentors.eu">na stránke GISMentors</a>. Okrem online HTML verzií tu čitateľ nájde aj PDF školiace materiály - zadarmo :) ! Ďalšia stabilná verzia QGIS 2.14 bude súčaťou pripravovaného <a class="reference external" href="http://www.gismentors.cz/skoleni/qgis/">Školenia QGIS pre pokročilých</a>, ktoré sa uskutoční v novom roku 2016. V prípade akýchkoľvek otázok a požiadaviek nás neváhajte kedykoľvek kontaktovať.
+<p style="text-align: left;">Za GISMentors <em>Ľudka Furtkevičová</em></p>
+<p style="text-align: center;"></p>
