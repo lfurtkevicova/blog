@@ -1,0 +1,84 @@
+V dnešnej dobe sa nájde mnoho fyzických či právnických osôb, ktorí denne potrebujú dôveryhodné, ľahko prístupné a podrobné informácie o vlastníckych vzťahoch v krajine. Nemusí ísť len o geodetov, znalcov v stavebníctve, architektov, ale o akékoľvek osoby, ktoré vlastnia aspoň malú nehnuteľnosť. Vytlačené <span style="color: #808080;">hardcopy</span> náčrty a mapy sa pri tom dostávajú čoraz viac do úzadia.
+
+Približne od augusta minulého roku existuje šikovná webová aplikácia <a href="http://mapka.gku.sk/mapovyportal/">MAPKA</a> na vyhľadávanie údajov z informačného systému slovenského katastra nehnuteľností. Umožňuje zobraziť katastrálnu mapu s parcelami a vybrané údaje o parcele ako výmeru, druh pozemku, vlastníka, správcu, nájomcu, či je na pozemku stavba, kto sú jej vlastníci. Užívateľ môže vyberať rôzne podklady, napríklad <span style="color: #808080;">ZBGIS, World Topo Map, World Street Map, World Imagery</span> alebo zobrazovať mapu určeného operátu s parcelami registra <span style="color: #808080;">EKN</span>.
+
+Keďže s geoinformatikou som v kontakte takmer každý deň a kataster mi je vo všeobecnosti blízky, povedala som si, že by nebolo zlé zistiť, ako je na tom spojenie dát slovenského katastra so softvérovými prostriedkami geografických informačných systémov GIS. Samozrejme viem, že peniaze určené na licencie sa dajú použiť napríklad na lepšiu customizáciu riešenia, hovorím preto len o open source prostriedkoch, teda oproti komerčnému softvéru bez akýchkoľvek zaťažení licenčnými poplatkami.
+
+Možno som len nemala šťastie, ale výsledkom môjho <span style="color: #808080;">lovu</span> na internete nebolo nič podľa mojich predstáv. Narazila som však na <a href="https://github.com/imincik/kataster-import">zdrojové kódy</a> nástroja pre import dát katastra Slovenskej republiky pod licenciou <a href="https://en.wikipedia.org/wiki/GNU_General_Public_License">GNU GPL 2</a>, ktorého vývoj začal niekedy okolo roku 2006. Ide o nástroj vytvorený pre príkazový riadok a obsahuje  <span style="color: #808080;">Python, Bash</span> a <span style="color: #808080;">SQL</span> skripty. Je síce zaťažený implementáciou riešenia rôznych anomálií v tom čase obsiahnutých v dátach katastra, no funguje a bol vyvíjaný ľuďmi, ktorých poznám v súvislosti s technológiou <a href="http://web.gislab.io/">GIS.lab</a> - na ktorej okrem iného prebiehajú aj všetky školenia <a href="http://www.gismentors.cz/">GISMentors</a>.
+
+S cieľom vedieť pracovať s katastrálnymi dátami v open source GIS bez použitia príkazového riadku som sa preto rozhodla vytvoriť pomôcku v podobe zásuvného modulu pre QGIS. Čo sú zásuvné moduly a na čo slúžia som opisovala už v materiáloch školenia QGIS pre začiatočníkov v kapitole <a href="http://training.gismentors.eu/qgis-zacatecnik/ruzne/qgis_pluginy.html">QGIS pluginy</a>.
+
+Zistila som, že tvorba pluginov rozhodne nie je až taká raketová veda. Chcelo to pár večerov, trochu snahy a výsledok, zatiaľ povedzme pre vlastné použitie sa dostavil. Nový modul som nazvala <span style="color: #808080;">SKKN tool</span> a celá jeho dokumentácia je dostupná na <a href="https://github.com/lfurtkevicova/kn-stuff/wiki">GitHube</a>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/skkn.png" alt="skkn" width="700" /><em>Zásuvný modul SKKN tool pre prácu s dátami katastra Slovenskej republiky v QGIS.</em></p>
+Nástroj zabezpečuje nahratie katastrálnych údajov a vektorovej katastrálnej mapy <a href="http://www.skgeodesy.sk/sk/">Úradu geodézie, kartografie a katastra</a>. Ide o prvý prototyp pluginu. Pracuje s dátami výmenného formátu súborov geodetických informácií <span style="color: #808080;">*.vgi</span> pre grafické dáta a s popisnými dátami vo formáte <span style="color: #808080;">*.dbf</span>, resp. <span style="color: #808080;">*.fpu</span>. Tieto dáta v prvom kroku konvertuje na CAD súbory <span style="color: #808080;">*.dgn</span>, SQL súbory <span style="color: #808080;">*.sql</span> a Shapefile súbory <span style="color: #808080;">*.shp</span> a následne ich importuje do databázy <a href="http://www.postgresql.org/">PostgreSQL</a>, s ktorou je možné jednoducho pracovať v prostredí geoinformačných systémov.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/plugin_dlgs.png" alt="plugin_dlgs" width="700" /><em>Dialógové okno nového zásuvného modulu SKKN tool.</em></p>
+To, že sú popisné a grafické údaje správne a aktuálne zaručuje fakt, že ide o oficiálne dáta z katastra nehnuteľností, akými sú parcely registra <span style="color: #808080;">CKN</span> a <span style="color: #808080;">EKN</span>, byty, stavby, vlastníci, užívatelia či nájomcovia parciel a podobne. Všetky tieto detailné informácie môžu byť súčasťou atribútových tabuliek. V GIS existujú široké možnosti ako dáta editovať, dopĺňať, filtrovať, vytvárať ich podmnožiny zodpovedajúce zadaným kritériám a všetky záznamy pohodlne a prehľadne prezentovať v podobe digitálnej či papierovej, vytlačenej podobe.
+<h5>Použitie zásuvného modulu v praxi</h5>
+Uvediem reálny praktický príklad. V záujmovej oblasti je potrebné umiestniť líniový stavebný objekt, napríklad vodovodné potrubie. Architekt musí do projektu zakresliť kadiaľ bude potrubie vedené. Aby sa vyhol zdĺhavým procesom, ktoré predstavujú konzultácie s každým vlastníkom, chce potrubie umiestniť tak, aby prechádzalo cez parcely čo najmenšieho počtu vlastníkov. Taktiež potrebuje niektoré informácie o vlastníkoch, napríklad kontakt, číslo listu vlastníctva a podobne. K dispozícii má grafické a popisné dáta katastra nehnuteľnosti v štandardnej forme <span style="color: #808080;">SPI00000.zip</span> a grafické dáta <span style="color: #808080;">VGI00000.zip</span>.
+<sub><em>Poznámka</em>: Pre názornosť bude vodovodné potrubie v tomto prípade predstavovať len jednoduchá línia, ktorá môže byť do prostredia QGIS importovaná ako <em>*.dxf</em> súbor.</sub>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/skkn_potrubie.png" alt="skkn_potrubie" width="700" /><em>Plánovaný stavebný objekt.</em></p>
+Riešenie v prostredí geoinformačných technológií je takmer triviálne. Vďaka priestorovým analýzam vektorových dát v prvom kroku vyselektujeme všetky parcely, cez ktoré aktuálne navrhnutý objekt prechádza.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/skkn_vyber_kn.png" alt="skkn_vyber_kn" width="700" /><em>Priestorový výber parciel registra CKN.</em></p>
+Líniu, reprezentujúcu potrubie v prostredí QGIS prekreslíme podľa požiadaviek, potom exportujeme ako <span style="color: #808080;">*.dxf</span> a môžeme opäť implementovať do výkresu architekta. Takýmto spôsobom vieme docieliť, že namiesto <span style="color: #808080;">46</span> budeme musieť kontaktovať len <span style="color: #808080;">9</span> vlastníkov.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/skkn_vyber_kn_efektivne.png" alt="skkn_vyber_kn_efektivne" width="700" /><em>Efektívne riešenie plánovaného stavebného objektu s príslušnými informáciami o vlastníkoch dotknutých parciel.</em></p>
+V niektorých prípadoch môže byť užitočné graficky znázorniť všetky vlastnícke vzťahy, listy vlastníctva či iné informácie v záujmovom území. Ako som už viackrát naznačila, QGIS si s podobnými úlohami veľmi ľahko poradí.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/skkn_potrubie_lv.png" alt="skkn_potrubie_lv" width="700" /><em>Grafické znázornenie parciel spolu s číslami listov vlastníctva.</em></p>
+
+<h3>Recept na pluginy</h3>
+Dnes existuje pre QGIS viac než <span style="color: #808080;">300</span> zásuvných modulov. V mnohých prípadoch však môže nastať situácia, kedy ani jeden z nich nespĺňa funkcionalitu, akú by sme práve potrebovali - ako napríklad v mojom prípade s dátami slovenského katastra. Úroveň rozširovania funkcionality QGIS sa pritom samozrejme líši. Za pomoci jazyka <a href="https://www.python.org/">Python</a> môže ísť o pridanie jednoduchého tlačidla až po tvorbu sofistikovaných nástrojov.
+
+V súvislosti s prípravou materiálov školenia <a href="http://www.gismentors.cz/terminy-skoleni/">GISMentors QGIS pre pokročilých</a> uvediem malú <span style="color: #808080;">ochutnávku</span>, ako si takýto plugin vytvoriť v piatich základných krokoch. Pôjde o vytvorenie vlastného zásuvného modulu s názvom <span style="color: #808080;">Save Views</span>. Tento plugin bude exportovať grafický výstup vo forme <span style="color: #808080;">*.png</span> pre každý prvok vo vybranej vektorovej vrstve do zvoleného adresára.
+<h5>Budeme potrebovať:</h5>
+<ul>
+	<li>zásuvný modul <span style="color: #808080;">Plugin Builder</span></li>
+	<li>väzby Python pre <span style="color: #808080;">Qt</span></li>
+	<li>aplikáciu <span style="color: #808080;">Qt Creator</span></li>
+	<li>zásuvný modul <span style="color: #808080;">Reloader Plugin</span></li>
+	<li>vhodný textový <span style="color: #808080;">editor</span></li>
+</ul>
+<h5>Postup:</h5>
+<b>1. Práca so zásuvným modulom Plugin Builder</b>
+
+Tento veľmi užitočný zásuvný modul vytvorí všetky potrebné súbory a štandardnú podobu kódu pre budúci plugin. Nainštalujeme ho klasickým spôsobom pomocou <a href="http://training.gismentors.eu/qgis-zacatecnik/ruzne/qgis_pluginy.html#spravce-zasuvnych-modulu&gt;">správcu zásuvných modulov</a>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/plugin_builder.png" alt="plugin_builder" width="350" /><em>Dialógové okno zásuvného modulu na tvorbu pluginov.</em></p>
+<b>2. Kompilácia súboru zdrojov spojených s aplikáciou</b>
+
+Vzhľadom k tomu, že budeme vyvíjať plugin v programovacom jazyku Python, musíme nainštalovať tzv. <span style="color: #808080;">Python bindings</span> pre Qt. Pre tvorbu zásuvných modulov je potrebný <span style="color: #808080;">pyrcc4</span>. Po jeho spustení bude plugin dostupný v QGIS.
+
+<b>3. Načítanie nového pluginu v správcovi pluginov a jednoduchý projekt na testovanie</b>
+
+V paneli správcu zásuvných modulov vyhľadáme náš nový plugin. Následne vytvoríme jednoduchý projekt, ktorý bude obsahovať pár vektorových vrstiev. Na obrázku nižšie sú zobrazené napríklad požiarne stanice, železnice, kraje, veľkoplošné územia a štátna hranica Českej republiky. V tomto prostredí budeme nový zásuvný modul priebežne testovať.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/np_project.png" alt="np_project" width="700" /><em>Príklad projektu s vektorovými vrstvami v QGIS na testovanie.</em></p>
+<b>4. Vytvorenie užívateľského rozhrania pomocou Qt Creator</b>
+
+Vzhľad a elementy dialógového okna pluginu vieme customizovať vďaka aplikácii <span style="color: #808080;">Qt Creator</span>. Spôsobom <span style="color: #808080;">drag and-drop</span> je možné z ľavého panelu pridávať ďalšie objekty a ich názvy a vlastnosti meniť v pravej časti dialógového okna.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/qt_creator.png" alt="qt_creator" width="700" /><em>Dialógové okno vytváraného pluginu v prostredí aplikácie Qt Creator.</em></p>
+<b>5. Pridanie logiky pomocou Python kódu a ďalšie úpravy</b>
+
+Správny textový editor alebo integrované vývojové prostredie (IDE) sú dôležité pri písaní kódu. Medzi obľúbené editory patria napríklad <span style="color: #808080;">Sublime Text, PyCharm, Vim, Emacs, Notepad++, TextWrangler, IDLE, Atom, Aquamacs, GNU Nano, Kate, gedit</span>, prostredie <span style="color: #808080;">Spyder</span> a podobne.
+
+Povedzme, že chceme, aby sa po spustení pluginu <em>Combo Box</em> automaticky naplnil vektorovými vrstvami aktuálneho projektu. Hlavným súborom, ktorý sa stará o logiku jednotlivých objektov je Python kód. Školenie obsahuje predpripravené časti kódu s podrobným návodom ako všetko pospájať.
+<pre><code>...
+ # populate the Combo Box with the layers loaded in QGIS
+ self.dlg.comboBox.clear() 
+ layers = self.iface.legendInterface().layers()
+ layer_list = []
+ for layer in layers:
+     layer_list.append(layer.name())
+     self.dlg.comboBox.addItems(layer_list)
+ ...
+ </code></pre>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/run-code.png" alt="run_code" width="700" /><em>Editácia Python súboru.</em></p>
+Grafické výstupy pre vrstvu krajov ako výsledok nového pluginu <span style="color: #808080;">Save Views</span> sú znázornené nižšie. Ich názov v adresári závisí od názvu konkrétnej vektorovej vrstvy. Líšia sa len poradovým číslom podľa pozície v atribútovej tabuľke.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/plugin_result_1.png" alt="plugin_result_1" width="700" /><em>Grafické súbory uložené vo zvolenom adresári pre vektorovú vrstvu krajov Českej republiky.</em></p>
+V súvislosti s témou katastra je na nasledujúcom obrázku projekt s katastrálnymi dátami. Vyznačené sú parcely, cez ktoré prechádza plánované vedenie.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/kn_project.png" alt="plugin_result_2" width="700" /><em>Znázornenie parciel, cez ktoré prechádza plánované vedenie.</em></p>
+Použitím pluginu <span style="color: #808080;">Save Views</span> vieme automaticky pre každého vlastníka vyhotoviť grafické znázornenie jeho parcely, na ktorej bude zapísané vecné bremeno.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/03/plugin_result_2.png" alt="plugin_result_2" width="700" /><em>Pohľad na každú parcelu ako výsledok zásuvného modulu Save Views.</em></p>
+
+<h5>Záver:</h5>
+Cieľom bolo ukázať, ako možno <span style="color: #999999;"><a style="color: #999999;">open source GIS</a></span> prepojiť s akýmikoľvek individuálnymi požiadavkami. Podobne ako v mojom predošlom príspevku <a href="http://www.gismentors.cz/blog/geoinformatika-a-qgis-v-hydrologii/">Geoinformatika a QGIS v hydrológii</a> aj tu sa potvrdilo, že GIS má obrovský potenciál uľahčovať spracovanie informácií rôzneho charakteru. Toto bol len jeden z mnohých modelov. Napríklad nedávno na konferencii <a href="http://www.gislze.cz/">Praktické využitie GIS v lesnictví a zemědelství</a>, ktorá sa konala v priestoroch <a href="http://mendelu.cz/">Mendelovej univerzity</a> v Brne, <a href="http://www.gismentors.cz/mentors/michalek/">Ján Michálek</a> prezentoval plugin umožňujúci zobrazovať a prechádzať dáta z informačného systému lesného hospodárstva, jeho <a href="https://www.youtube.com/watch?v=k76a1AyYfJw&amp;feature=youtu.be">prohlížečku LHPO v ISLH xml</a>.
+
+Možnosti sú široké, preto ak máte otázky alebo potrebujete poradiť, <a href="http://www.gismentors.eu/">GISMentors</a> vám radi ponúknu školenia a konzultácie prispôsobené vašim konkrétnym potrebám. Pozrite si termíny najbližších školení <a href="http://www.gismentors.cz/skoleni/qgis/">QGIS</a>, <a href="http://www.gismentors.cz/skoleni/grass-gis/">GRASS GIS</a>, <a href="http://www.gismentors.cz/skoleni/geopython/">GeoPython</a> či <a href="http://www.gismentors.cz/skoleni/postgis/">PostGIS</a>, prípadne neváhajte napísať na <span style="color: #808080;">info@gismentors.eu</span>.
+
+Za GISMentors <a href="http://www.gismentors.cz/mentors/furtkevicova/">Ľudka Furtkevičová</a>
