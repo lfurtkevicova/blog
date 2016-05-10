@@ -1,0 +1,87 @@
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/gis.png" alt="gis" alt="gis" width="570" /></p>
+
+Správne odhadnúť úroveň znalostí GIS publika je dôležité. Ako a čo povedať skupine s takmer žiadnymi poznatkami? Čo je GIS? Pre niekoho možno hlúpa otázka, ale zo skúseností <a href="http://wiki.gis.com/wiki/index.php/New_to_GIS#Related_links">GISMentors</a> vyplynulo, že občas je naozaj ťažké určiť hranicu pokročilosti jednotlivých účastníkov. Môže sa stať, že na školenie príde niekto, kto o GIS síce počul, ale rád by začal prakticky úplne <span style="color: #808080;">od piky</span>. 
+
+Práve preto vznikla myšlienka <a href="http://www.gismentors.cz/skoleni/uvod-do-gis/">Úvod do GIS</a> pre úplných začiatočníkov, ktorí nemajú žiadne znalosti a skúsenosti s <span style="color: #808080;">geografickými informačnými systémami</span>. Každý je majstrom svojho fachu a je pochopiteľné, že nejaký pojem <span style="color: #808080;">GIS</span> mu veľa nehovorí. Zatiaľ!  
+Dá sa nájsť veľa definícií od ich úzkeho chápania až po široko koncipované. Jednoznačná definícia neexistuje. Isté však je, že GIS dokáže dať rôznym údajom neobyčajný zmysel a logiku. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/experience.jpg" alt="experience" alt="experience" width="500" /></p> 
+
+Všetko potrebné, aby mohol človek pracovať s nástrojmi geoinformatiky vyžaduje správne pochopiť všeobecné pojmy ako <span style="color: #808080;">geodáta</span>, <span style="color: #808080;">dátové modely</span>, <span style="color: #808080;">súradnicové systémy</span>, <span style="color: #808080;">možnosti reprezentácie dát</span>, <span style="color: #808080;">konverzie</span>, <span style="color: #808080;">transformácie</span>, <span style="color: #808080;">priestorové databázy</span>, <span style="color: #808080;">štandardy</span>, základný prehľad o <span style="color: #808080;">GIS serveroch</span>, <span style="color: #808080;">webových rozhraniach</span>, prípadne prepojenie s <span style="color: #808080;">automatizáciou</span> a <span style="color: #808080;">programovaním</span>.    
+
+Predtým ako <a href="http://www.gismentors.cz/mentors/cepicky/">Jáchym</a> a <a href="http://www.gismentors.cz/mentors/landa/">Martin</a> povedú v Prahe prvé školenie pre open source GIS nováčikov, je tu pár riadkov s myšlienkami čo open source GIS dokáže, kde všade sa dá použiť a prečo by ste mohli chcieť naučiť sa s ním pracovať. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/layers.png" alt="layers" alt="layers" width="570" /><em>Rôzne dátové vrstvy.</em></p> 
+
+Najrozsiahlejší slobodný desktopový GIS softvér je <a href="https://grass.osgeo.org/">GRASS GIS</a>. Obsahuje stovky nástrojov pre rôzne typy úloh a dát. Jeho trochu populárnejším bratom je <a href="http://www.qgis.org/en/site/">QGIS</a>. Aj GRASS GIS, aj QGIS sú úzko prepojené s ďalšími nástrojmi ako je databázový systém <a href="http://postgis.net/">PostGIS</a>, mapový server <a href="http://geoserver.org/">GeoServer</a> alebo <a href="https://geopython.github.io/">GeoPython</a> umožňujúci automatizáciu bežných úloh v GIS. <a href="http://wiki.gis.com/wiki/index.php/New_to_GIS#Related_links">GISMentors</a> zastrešujú školenia každého typu. Kde všade sa to dá potom využiť?   
+ 
+<p>
+<span style="color: #808080;"><strong>Živelné pohromy, lavíny, zosuvy, povodne, topografické analýzy</strong></span>
+<p>
+GIS môže pomôcť pri zodpovedaní mnohých otázok. Napríklad kam odteká voda? Zrejme vždy dolu z kopca, ale len vďaka dátam vieme presne zistiť sklon terénu a v danej oblasti vizualizovať, kde sa voda hromadí viac a kde menej, kombinovať to s inými faktormi a vytvárať analýzy. To všetko potom možno využiť pri vizualizáciách týkajúcich sa erózie, zrážok, určovaní povodňového, lavínového či zosuvného rizika. GRASS GIS podporuje aj časopriestorové analýzy a obsahuje mnoho užitočných <a href="https://grass.osgeo.org/grass71/manuals/temporal.html">modulov</a>. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/terrain.png" alt="erosion" alt="erosion" width="770" /><em>Rozličné dáta v prostredí GRASS GIS.</em></p> 
+
+S topografickými analýzami úzko súvisí analýza viditeľnosti a analýza nákladov. Kľúčovými sú GRASS moduly <a href="https://grass.osgeo.org/grass70/manuals/r.viewshed.html">r.viewshed</a> a <a href="https://grass.osgeo.org/grass70/manuals/r.cost.html">r.cost</a>. Na nasledujúcom obrázku je zobrazená veľkosť uhla, pod ktorým je miesto vidieť z daného observačného bodu a analýza nákladov pohybu v teréne s ohniskom požiaru, požiarnymi stanicami a najkratšou spádovou cestou.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/viewshed-cost.png" alt="viewshed-cost" alt="viewshed-cost" width="770"/><em>Analýza viditeľnosti z daného observačného bodu, príklad analýzy nákladov a najoptimálnejšia trasa.</em></p> 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/gif-example.gif" alt="gif" alt="gif" width="385" /></p> 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/network.png" alt="network" alt="network" width="770" /><em>Príklad vykreslenia série priestorových a sieťových analýz.</em></p> 
+Dôležité zastúpenie má aj navigácia. Dnes už takmer každý nosí vo vrecku telefón s GPS čip-om. Často potrebujeme nájsť miesto, kde musíme niečo vybaviť, prevziať, kúpiť, nájsť najbližšiu predajňu. Aby sme zistili správny smer, využívame mapy v telefóne či navigácii. Aj toto je základnou súčasťou GIS. S ohľadom na našu aktuálnu polohu, dobravné podmienky či iné faktory sme efektívne privedení do cieľa. Denne využívame voľné služby ako <a href="https://www.openstreetmap.org/#map=5/51.500/-0.100">OpenStreetMap</a>, <a href="http://openrouteservice.org/">OpenRouteService</a>, <a href="hhttps://www.geocaching.com">Geocaching</a> a mnohé <a href="http://wiki.openstreetmap.org/wiki/List_of_OSM-based_services">iné</a>. 
+
+<p>
+<span style="color: #808080;"><strong>Poľnohospodárstvo, lesníctvo, diaľkový prieskum</strong></span>
+<p>
+Niektorí moderní poľnohospodári využívajú GIS a letecké snímky diaľkového prieskumu s cieľom maximalizovať výnos pestovaných plodín. Zo snímok je možné zhodnotiť zdravie rastlín a tak plánovať buď zalievanie, postreky, hnojenie alebo výmenu pôdy. Mnohé moduly GRASS GIS dokážu vyčariť naozaj pekné pohľady. Na obrázku nižšie je príklad spracovania dát satelitu <a href="https://en.wikipedia.org/wiki/Landsat_8">Landsat8</a> pre oblasť Trentina v severnej časti Talianska z roku 2014.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/landsat.png" alt="landsat" alt="landsat" width="770" /><em>Spracovanie dát diaľkového prieskumu pre oblasť severného Talianska.</em></p>      
+
+<p>
+<span style="color: #808080;"><strong>Zdravotná starostlivosť</strong></span>
+<p>
+Niet pochýb, že technologické pokroky posledných rokov majú veľký vplyv na zdravotníctvo. A práve aj tu má GIS zastúpenie. Vyhodnotením demografických dát, klimatických podmienok, vizualizovaním výskytu chorôb možno systematicky plánovať preventívne stratégie, napríklad plánovať očkovanie, zvýšenie zásob liekov alebo kapacitu lekárov konkrétneho odboru. Okrem priamo meraných dát sa najnovšie využívajú aj dáta sociálnych sietí. Napríklad tweet-y obsahujúce kľúčové slová ako <span style="color: #808080;">nádcha</span>, <span style="color: #808080;">chrípka</span>, <span style="color: #808080;">liečba</span> a podobne môžu v GIS mape odhaliť zaujímavé informácie. Tiež sa dajú hľadať vhodné oblasti na výstavbu novej nemocnice, rehabilitačného centra alebo efektívne umiestniť lekárne. Vďaka geografickým a štatistickým dátami sa dajú simulovať rôzne situácie a tak správne odpovedať na otázky prečo, ako, čo ak. Jedna <a href="http://aje.oxfordjournals.org/content/early/2011/03/28/aje.kwr003.full">americká štúdia</a> aj vďaka GIS našla súvislosť medzi oblasťami v blízkosti striekaných polí a vyšším výskytom rakoviny prostaty. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/healthcare.png" alt="healthcare" alt="healthcare" width="570" /><em>Vizualizácia dát súvisiacich s cukrovkou (vľavo) a hustota zastúpenia obchodov so zdravou stravou (vpravo).</em></p> 
+
+<p>
+<span style="color: #808080;"><strong>Ekonomika, investície, štátna správa, kataster</strong></span>  
+<p>
+Rozloženie obyvateľstva z etnického, jazykového alebo politického hľadiska, prípadne dostupnosť zdrojov ako ropa, zemný plyn, nerastné suroviny, atď. môže pomôcť ekonómom a podnikateľom pri plánovaní nových investícii alebo napríklad pri optimálnom umiestnení reklám. Lokálne plánovanie využitia územia v QGIS môže kľudne vyzerať ako na obrázku nižšie. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/urban_planning.jpg" alt="urban_planning" alt="urban_planning" width="470" /><em>Územné plánovanie v QGIS.</em></p>  
+Okrem toho sa dajú robiť 3D modely, analyzovať už spomínanú viditeľnosť, dostupnosť signálu a podobne. Ďalšou oblasťou je kataster. Správne informácie o vlastníkoch a nehnuteľnostiach sú nevyhnutné takmer pri každom stavebnom projekte. Geog­ra­fic­ké in­for­mač­né sys­té­my sa však za posledné roky dostali aj do kancelárií iných pracovníkov štátnej správy. Samosprávy spravujú tech­nic­ké ma­py mes­ta, zá­klad­nú bá­zu geo­de­tic­kých dát, urbanistické návrhy a ďalšie podobné územ­no-ana­ly­tic­ké pod­kla­dy.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/dmr.png" alt="dmr" alt="dmr" width="570" /></p>
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/3D.png" alt="3D" alt="3D" width="770" /><em>Digitálny model terénu a 3D vizualizácia budov na podklade OpenStreetMap v QGIS.</em></p> 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/parcely.png" alt="parcely" alt="parcely" width="770" /><em>Dáta českého katastra, VFK plugin a vhodné parcely pre výstavbu nového stavebného objektu.</em></p> 
+
+<p>
+<span style="color: #808080;"><strong>Transportné a inžinierske siete</strong></span>
+<p>
+Existujú GIS systémy pre mestá, kde sa vedú užitočné informácie o typoch transportných sietí, inžinierskych sietí, o ich materiáli, stave a veku, čo pomáha efektívnej údržbe. Tieto informácie sú uložené v atribútových tabuľkách. Tabuľka slúži na prehliadanie a editáciu atribútovej zložky dát. Informácie možno aktualizovať, vyberať, filtrovať, presúvať a tak prehľadne zobrazovať všetko podľa konkrétnych požiadaviek.   
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/at_table.png" alt="at_table" alt="at_table" width="770" /><em>Atribútová tabuľka vrstvy.</em></p> 
+
+<p>
+<span style="color: #808080;"><strong>Výskyt mestských zásahov, zločinov, grafy</strong></span>
+<p>
+Medzi ďalšie možnosti patrí tvorba diagramov a grafov. V QGIS dokážeme na základe dát vytvárať či už koláčové, textové alebo stĺpcové diagramy a následne ich zobrazovať v mape.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/grafy.png" alt="grafy" alt="grafy" width="770" /><em>Počet vrážd pre vyššie územné samosprávne celky a znázornenie počtu diaľnic, rýchlostných ciest, ciest 1., 2. a 3. formou diagramov.</em></p> 
+
+<p>
+<span style="color: #808080;"><strong>Fotografie, obrázky, historické mapy, porovnávanie v rôznom čase</strong></span>
+<p>
+Skutočnosť, že v databáze existujú priestorové aj atribútové dáta umožňuje túto databázu využiť vo viacerých smeroch. 
+Existuje veľké množstvo obrazových dát, ktoré nie sú priestorovo umiestnené. Staré náčrty alebo analógové mapy sa však dajú georeferencovať, t.j. umiestniť v priestore. Porovnanie so súčasnými geografickými dátami v digitálnom prostredí môže odhaliť zaujímavé fakty.
+Ďalším príkladom prepojenia mapy s nepriestorovými obrazovými dátami je vkladanie obrázkov a symbolov do atribútovej tabuľky vektorov, čo umožňuje zobraziť detail daného vektorového prvku. Možnosť rôzne kombinovať rôznorodé dáta tak ešte viac zvyšuje atraktivitu GIS. Na interaktívne porovnávanie rastrových máp je veľmi užitočná napríklad wxGUI aplikácia GRASS GIS s názvom <a href="https://grass.osgeo.org/grass71/manuals/wxGUI.mapswipe.html">Map Swipe</a>.
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/georeferencing.png" alt="georeferencing" alt="georeferencing" width="570" /><em>Georeferencovanie a vkladanie obrazových atribútov v prostredí QGIS.</em></p> 
+
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/compare.png" alt="compare" alt="compare" width="570" /><em>Interaktívne porovnávanie rastrových máp v GRASS GIS.</em></p>  
+<p>
+<p>
+Toto bol len slabý odvar toho, čo open source GIS ponúka. V mapách sú naozaj uložené informácie o všeličom a ich priestorová vizualizácia prináša nový rozmer a pridanú hodnotu. Existuje mnoho spôsobov a odvetví, kde ho možno nasadiť. Prečo ale otvorený softvér?
+
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/beer.png" alt="beer" alt="beer" width="300" /><em>Nie je <span style="color: #808080;">free</span> ako <span style="color: #808080;">free</span>.</em></p> 
+Otvorený softvér práve NEreprezentuje <span style="color: #808080;">free beer</span>. Funguje na princípe slobody:
+<ul>
+	<li>slobody študovať zdrojový kód aplikácie,</li>
+	<li>slobody zdieľať zdrojový kód,</li>
+	<li>slobody modifikovať zdrojový kód a zmeny zdieľať s ostatnými užívateľmi.</li>
+</ul> 
+Nie je to business model, ale vývojový model. Každý dobrý open source projekt má silnú a zdravú komunitu vývojárov a užívateľov. O čom je skutočný business model, čo sú organizácie <span style="color: #808080;">OSGeo.org</span> a <span style="color: #808080;">OSGeo.cz</span>, aké štandardy z pohľadu otvorenosti a spôsobu ich vzniku sú dôležité a ďalšie súvisiace poznatky budú základným obsahom spomínaného kurzu <a href="http://www.gismentors.cz/skoleni/uvod-do-gis/">Úvod do GIS</a>. 
+<p style="text-align: center;"><img class="aligncenter wp-image-765" src="http://www.gismentors.cz/wordpress/wp-content/uploads/2016/05/gislab.png" alt="gislab" alt="gislab" width="570" /><em>Technológia GIS.lab.</em></p> 
+
+Naučte sa ako šikovne využívať voľne dostupný GIS softvér, zefektívnite svoju prácu, nechajte si poradiť a nové poznatky aplikujte práve v tej vašej oblasti. Každé školenie prebieha podľa vopred pripraveného harmonogramu. Po dohode s účastníkmi sa dá samozrejme upraviť. Všetky podrobné <a href="http://www.gismentors.cz/skoleni/info/">informácie</a> sú na stránke <a href="http://wiki.gis.com/wiki/index.php/New_to_GIS#Related_links">GISMentors</a>. Pracuje sa vždy s dátovými sadami voľne dostupných geografických dát na platforme <a href="http://gislab-documentation.readthedocs.io/en/latest/">GIS.lab</a>. Dáta a všetky materiály zo školenia dostanú učastníci na DVD spolu s certifikátom o absolvovaní. Pozrite si nové <a href="http://www.gismentors.cz/skoleni/terminy/">termíny</a> na jún a akékoľvek otázky píšte na <span style="color: #808080;">info@gismentors.cz</span>. 
+
+Za GISMentors <a href="http://www.gismentors.cz/mentors/furtkevicova/">Ľudka Furtkevičová</a>
